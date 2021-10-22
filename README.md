@@ -1,19 +1,39 @@
-# Recast-Script
-# For execution of script please use : 
-Steps Common to all Security centers 
-Once you have successfully logged into the security center server follow the below steps to execute the script.
+# Recast Risk Rules/Vulnerabilities in Tenable.sc Security Center
+
+This script allows to recast vulnerabilities in Tenable Security Centers by taking a csv file with fields - `repositories`, `plugin`, `newSeverity`, `hostType`, `port`, `protocol`, comments
+
+## Executing the script
+
+Login to the Security Center Server.
+
+```bash
+git clone https://github.com/radpai/Tenable.sc-Recast
+```
+
+Modify the `RecastTenableSC.py` to add the values for `SC IP address` , `username`, `password` for your Security Center.
+
+Modify the `recast.csv` to add the following:  
+`repositories` - repository ids in Security Center  
+`plugin` - comma separated list of plugins to recast  
+`newSeverity` - the severity to recast your vulnerability to:  
+   `0`: informational  
+   `1`: low   
+   `2`: medium  
+   `3`: high  
+   `4`: critical  
+`hostType` - all   
+`port` - any or specific port  
+`protocol` - all or specific protocol  
+`comments` - reason for recasting the risk rule.
+
+## Usage
+
+```python
 $ ls
-$ recast.py
-You should see a file by name recast.py, if not create a file using the following command.
-$ vi recast.py
-Hit "i" to edit the file and copy the below contents to the file and save [ ESP followed by :wq] 
-pluginList → list of plugins that need to be recast. 
-newSeverity.id → 0 : informational, 1: low, 2: medium, 3: high, 4: critical
-repositories.id → each 'id' is repository.id which is numerical value associated to the repository.name.
+$ RecastTenableSC.py recast.csv
 
-Basic vi commands :
-vi filename → create a a new file or already existing file.
-"i" → insert contents/edit a file , ESP → get out of edit mode, :wq → save changes , :q → quit or close w/o saving.
+# Execution
+$ python3 RecastTenableSC.py recast.csv
 
-Create a file by name recast.csv with list of repo's , plugin IDs and required severity the plugins need to be recast to: example of csv to be used is provided as recast.csv
-Ensure to use the file path based on the location of the csv created - using pwd and add the path where your csv resides in place of "x/home/radpai/recast.csv" in the script.
+```
+Post execution, you should see the vulnerabilities/plugins with new severity in the Security Center.
